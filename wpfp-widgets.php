@@ -48,22 +48,13 @@ function wpfp_widget_init() {
     function wpfp_users_favorites_widget_view($args) {
         extract($args);
         $options = wpfp_get_options();
-        if (isset($options['uf_widget_limit'])) {
-            $limit = $options['uf_widget_limit'];
-        }
         $title = empty($options['uf_widget_title']) ? 'Users Favorites' : $options['uf_widget_title'];
         echo wp_kses_post($before_widget);
         echo wp_kses_post($before_title
              . $title
              . $after_title);
-        $favorite_post_ids = wpfp_get_users_favorites();
 
-		$limit = $options['uf_widget_limit'];
-        if (@file_exists(TEMPLATEPATH.'/wpfp-your-favs-widget.php')):
-            include(TEMPLATEPATH.'/wpfp-your-favs-widget.php');
-        else:
-            include("wpfp-your-favs-widget.php");
-        endif;
+        echo '<div class="user-favorite-list">Loading... </div>';
         echo wp_kses_post($after_widget);
     }
 

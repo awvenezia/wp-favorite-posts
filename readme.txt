@@ -1,11 +1,11 @@
 === WP Favorite Posts ===
-Contributors: hberberoglu
-Donate link: https://www.paypal.me/hberberoglu
+Contributors: hberberoglu, prateekdarmwal
+Donate link: https://www.paypal.me/PrateekDarmwal
 Tags: favorite posts, favorite, favourite, posts, favorites,
 wp-favorite-posts, reading list, post list, post lists, lists
 Requires at least: 3.5
-Tested up to: 5.5.1
-Stable tag: 1.6.8
+Tested up to: 5.9
+Stable tag: 1.6.9
 
 Allows visitors to add favorite posts. This plugin use cookies for saving data so
 unregistered users can favorite a post.
@@ -30,7 +30,7 @@ Rejected URIs".
 
 If you need support [create a topic on support forum](http://wordpress.org/support/plugin/wp-favorite-posts)
 
-Please submit your pull requests to https://github.com/hberberoglu/wp-favorite-posts
+Please submit your pull requests to https://github.com/awvenezia/wp-favorite-posts
 
 == Installation ==
 
@@ -51,6 +51,9 @@ text into content section. This page will contain users favorite posts.
 3. Advanced Settings
 
 == Changelog ==
+= 1.6.9 (2022-02-19) =
+* Updated tested up to info. Tested with 5.9.
+
 = 1.6.8 (2020-09-04) =
 * Updated tested up to info. Tested with 5.5.1.
 
