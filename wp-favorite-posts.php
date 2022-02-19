@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: WP Favorite Posts
-Plugin URI: https://github.com/hberberoglu/wp-favorite-posts
+Plugin URI: https://github.com/awvenezia/wp-favorite-posts
 Description: Allows users to add favorite posts. This plugin use cookies for saving data so unregistered users can favorite a post. Put <code>&lt;?php wpfp_link(); ?&gt;</code> where ever you want on a single post. Then create a page which includes that text : <code>[wp-favorite-posts]</code> That's it!
-Version: 1.6.8
-Author: Huseyin Berberoglu
-Author URI: https://github.com/hberberoglu
+Version: 1.6.9
+Author: Alto-Palo
+Author URI: https://github.com/awvenezia
 
 */
 
 /*
-    Copyright (c) 2009 Hüseyin Berberoğlu (hberberoglu@gmail.com)
+    Copyright (c) 2022 Alto-Palo (awvenezia@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Author URI: https://github.com/hberberoglu
 
 */
 
-define('WPFP_JS_VERSION', "1.6.8");
+define('WPFP_JS_VERSION', "1.6.9");
 define('WPFP_PATH', plugins_url() . '/wp-favorite-posts');
 define('WPFP_META_KEY', "wpfp_favorites");
 define('WPFP_USER_OPTION_KEY', "wpfp_useroptions");
@@ -592,10 +592,10 @@ if( ! class_exists( 'customUpdateChecker' ) ) {
 
 			if( false === $remote || ! $this->cache_allowed ) {
 
-				$remote = wp_remote_get(
-					'https://rudrastyh.com/wp-content/uploads/updater/info.json',
+				$remote = vip_safe_wp_remote_get(
+					'https://raw.githubusercontent.com/awvenezia/wp-favorite-posts/main/info.json',
 					array(
-						'timeout' => 60,
+						'timeout' => 3,
 						'headers' => array(
 							'Accept' => 'application/json'
 						)
@@ -622,9 +622,6 @@ if( ! class_exists( 'customUpdateChecker' ) ) {
 
 
 		function info( $res, $action, $args ) {
-
-			// print_r( $action );
-			// print_r( $args );
 
 			// do nothing if you're not getting plugin information right now
 			if( 'plugin_information' !== $action ) {
