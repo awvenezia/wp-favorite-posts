@@ -4,7 +4,7 @@
 	"author" : "<a href='https://alto-palo.com'>Alto Palo</a>",
 	"author_profile" : "http://profiles.wordpress.org/prateekdarmwal",
 	"version" : "1.7.0",
-	"download_url" : "https://github.com/awvenezia/wp-favorite-posts/archive/refs/tags/latest-v1.7.0.zip",
+	"download_url" : "https://github.com/awvenezia/wp-favorite-posts/archive/refs/tags/latest.zip",
 	"requires" : "4.4",
 	"tested" : "5.9",
 	"requires_php" : "7.1",
