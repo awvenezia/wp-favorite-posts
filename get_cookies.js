@@ -52,7 +52,7 @@ const WP_FAV_COOKIE = 'wp-favorite-posts';
             type : "post",
             dataType : "json",
             url : fetchCookies.ajaxurl,
-            data : {action: "fetch_cookies", cookie_string : cookieString},
+            data : {action: "nlsn_fetch_cookies", cookie_string : cookieString},
             success: function(response) {
                if(response.type == "success") {
                   console.log("Updated Fav Posts")
