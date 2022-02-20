@@ -1,6 +1,6 @@
 <?php
 /**
- * Version: 1.7.1
+ * Version: 1.7.2
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -12,7 +12,7 @@ if ( $nlsn_favorite_post_ids ) :
 	$nlsn_c                 = 0;
 	$nlsn_favorite_post_ids = array_reverse( $nlsn_favorite_post_ids );
 	foreach ( $nlsn_favorite_post_ids as $nlsn_fav_post_id ) {
-		if ( $nlsn_c++ == $limit ) {
+		if ( $nlsn_c++ === $limit ) {
 			break;
 		}
 		$nlsn_p = get_post( $nlsn_fav_post_id );

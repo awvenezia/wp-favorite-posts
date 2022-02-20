@@ -1,6 +1,6 @@
 <?php
 /**
- * Version: 1.7.1
+ * Version: 1.7.2
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -21,7 +21,16 @@ function nlsn_widget_init() {
 	 * @return void
 	 */
 	function nlsn_widget_view( $args ) {
-		extract( $args );
+		$before_title  = '';
+		$before_widget = '';
+		$after_title   = '';
+		$after_widget  = '';
+		$limit         = '';
+		if ( ! empty( $args ) ) {
+			foreach ( $args as $key => $val ) {
+				${$key} = $val;
+			}
+		}
 		$options = nlsn_get_options();
 		if ( isset( $options['widget_limit'] ) ) {
 			$limit = $options['widget_limit'];
@@ -53,12 +62,12 @@ function nlsn_widget_init() {
 		?>
 		<p>
 			<label for="nlsn-title">
-				<?php _e( 'Title:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $title ); ?>" class="widefat" id="nlsn-title" name="nlsn-title" />
+				<?php esc_html_e( 'Title:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $title ); ?>" class="widefat" id="nlsn-title" name="nlsn-title" />
 			</label>
 		</p>
 		<p>
 			<label for="nlsn-limit">
-				<?php _e( 'Number of posts to show:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $limit ); ?>" style="width: 28px; text-align:center;" id="nlsn-limit" name="nlsn-limit" />
+				<?php esc_html_e( 'Number of posts to show:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $limit ); ?>" style="width: 28px; text-align:center;" id="nlsn-limit" name="nlsn-limit" />
 			</label>
 		</p>
 		<?php if ( ! $options['statistics'] ) { ?>
@@ -80,7 +89,15 @@ function nlsn_widget_init() {
 	 * @return void
 	 */
 	function nlsn_users_favorites_widget_view( $args ) {
-		extract( $args );
+		$before_title  = '';
+		$before_widget = '';
+		$after_title   = '';
+		$after_widget  = '';
+		if ( ! empty( $args ) ) {
+			foreach ( $args as $key => $val ) {
+				${$key} = $val;
+			}
+		}
 		$options = nlsn_get_options();
 		$title   = empty( $options['uf_widget_title'] ) ? 'Users Favorites' : $options['uf_widget_title'];
 		echo wp_kses_post( $before_widget );
@@ -110,12 +127,12 @@ function nlsn_widget_init() {
 		?>
 		<p>
 			<label for="nlsn-uf-title">
-				<?php _e( 'Title:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $uf_title ); ?>" class="widefat" id="nlsn-uf-title" name="nlsn-uf-title" />
+				<?php esc_html_e( 'Title:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $uf_title ); ?>" class="widefat" id="nlsn-uf-title" name="nlsn-uf-title" />
 			</label>
 		</p>
 		<p>
 			<label for="nlsn-uf-limit">
-				<?php _e( 'Number of posts to show:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $uf_limit ); ?>" style="width: 28px; text-align:center;" id="nlsn-uf-limit" name="nlsn-uf-limit" />
+				<?php esc_html_e( 'Number of posts to show:', 'nielsen' ); ?> <input type="text" value="<?php echo esc_attr( $uf_limit ); ?>" style="width: 28px; text-align:center;" id="nlsn-uf-limit" name="nlsn-uf-limit" />
 			</label>
 		</p>
 
