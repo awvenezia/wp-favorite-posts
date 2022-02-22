@@ -3,7 +3,7 @@
  * Plugin Name: WP Favorite Posts
  * Plugin URI: https://github.com/awvenezia/wp-favorite-posts
  * Description: Allows users to add favorite posts. This plugin use cookies for saving data so unregistered users can favorite a post. Put <code>&lt;?php nlsn_link(); ?&gt;</code> where ever you want on a single post. Then create a page which includes that text : <code>[wp-favorite-posts]</code> That's it!
- * Version: 1.7.2
+ * Version: 1.7.3
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -28,7 +28,7 @@
 
 */
 
-define( 'NLSN_JS_VERSION', '1.7.2' );
+define( 'NLSN_JS_VERSION', '1.7.3' );
 define( 'NLSN_PATH', plugins_url("",__FILE__) );
 define( 'NLSN_META_KEY', 'nlsn_favorites' );
 define( 'NLSN_USER_OPTION_KEY', 'nlsn_useroptions' );
