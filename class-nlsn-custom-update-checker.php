@@ -70,15 +70,27 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 
 			if ( false === $remote || ! $this->cache_allowed ) {
 
-				$remote = vip_safe_wp_remote_get(
-					'https://raw.githubusercontent.com/awvenezia/wp-favorite-posts/main/info.json',
-					array(
-						'timeout' => 3,
-						'headers' => array(
-							'Accept' => 'application/json',
-						),
-					)
-				);
+				if (function_exists('vip_safe_wp_remote_get')) {
+					$remote = vip_safe_wp_remote_get(
+						'https://raw.githubusercontent.com/awvenezia/wp-favorite-posts/main/info.json',
+						array(
+							'timeout' => 3,
+							'headers' => array(
+								'Accept' => 'application/json',
+							),
+						)
+					);
+				} else {
+					$remote = wp_safe_remote_get(
+						'https://raw.githubusercontent.com/awvenezia/wp-favorite-posts/main/info.json',
+						array(
+							'timeout' => 3,
+							'headers' => array(
+								'Accept' => 'application/json',
+							),
+						)
+					);
+				}
 
 				if (
 					is_wp_error( $remote )

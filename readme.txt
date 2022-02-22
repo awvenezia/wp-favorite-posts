@@ -1,6 +1,6 @@
 === WP Favorite Posts ===
-Contributors: hberberoglu, prateekdarmwal
-Donate link: https://www.paypal.me/PrateekDarmwal
+Contributors: awvenezia
+Donate link: https://www.paypal.me/andreaAmpCreate
 Tags: favorite posts, favorite, favourite, posts, favorites,
 wp-favorite-posts, reading list, post list, post lists, lists
 Requires at least: 3.5
@@ -23,7 +23,7 @@ Also there is a widget named "Most Favorited Posts". And you can use this templa
 tag for listing most favorited posts;
 
 <h2>Most Favorited Posts</h2>
-<?php wpfp_list_most_favorited(5); ?>
+<?php nlsn_list_most_favorited(5); ?>
 
 If you use WP Super Cache you must add page (which you show favorites) URI to "Accepted Filenames &
 Rejected URIs".
@@ -36,10 +36,10 @@ Please submit your pull requests to https://github.com/awvenezia/wp-favorite-pos
 
 1. Unzip into your `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php if (function_exists('wpfp_link')) { wpfp_link(); } ?>` in your
+1. Place `<?php if (function_exists(nlsn_link')) { nlsn_link(); } ?>` in your
 single.php or page.php template file. Then favorite this post link will appear in all posts.
 1. OR if you DO NOT want the favorite link to appear in every post/page, DO NOT
-use the code above. Just type in [wpfp-link] into the selected post/page
+use the code above. Just type in [nlsn-link] into the selected post/page
 content and it will embed the print link into that post/page only.
 1. Create a page e.g. "Your Favorites" and insert `{{wp-favorite-posts}}`
 text into content section. This page will contain users favorite posts.
@@ -80,7 +80,7 @@ text into content section. This page will contain users favorite posts.
 
 = 1.5.9.1 (2014-01-04) =
 * fix php warnings
-* do wpfp actions on wp_loaded instead of template_redirect
+* do nlsn actions on wp_loaded instead of template_redirect
 
 = 1.5.9 (2014-01-03) =
 * Version bump
@@ -128,11 +128,11 @@ text into content section. This page will contain users favorite posts.
 
 = 1.4.3 (2010-04-13) =
 * Admin can write html codes to label settings (on admin page)
-* Added "wpfp_link_html" and "wpfp_remove_favorite_link" filters.
+* Added "nlsn_link_html" and "nlsn_remove_favorite_link" filters.
 
 = 1.4.3 (2010-04-09) =
 * Fix: same remove link for all posts on index
-* better wpfp.js: remove li which on favorites page.
+* better nlsn.js: remove li which on favorites page.
 
 = 1.4.1 (2010-04-05) =
 * code refactor, add do_action for add and remove to list (#225575)
@@ -140,14 +140,14 @@ text into content section. This page will contain users favorite posts.
 * Fix plugin path, fixes image loading problems (#222902)
 
 = 1.4 (2010-03-20) =
-* Override page template if wpfp-page-template.php exists on template directory.
+* Override page template if nlsn-page-template.php exists on template directory.
 * Add [wp-favorite-posts] shortcode. Use shortcode instead of {{wp-favorite-posts}}
 
 = 1.3.5 (2010-03-17) =
 * Fix meta key issue.
 
 = 1.3.4 (2010-03-16) =
-* Fix wpfp-span issue
+* Fix nlsn-span issue
 
 = 1.3.3 (2010-03-16) =
 * Fixed regression: if javascript doesn't work change to non-ajax mode.
@@ -180,9 +180,9 @@ Similary You can show add link when someone remove a favorite.
 
 = 1.1.7 (2009-03-10) =
 * Fixed duplicate loading image problem
-* Added [wpfp-link] feature;
+* Added [nlsn-link] feature;
 You can show favorite link only in preferred posts with writing
-[wpfp-link] to the post content.
+[nlsn-link] to the post content.
 
 = 1.1.6 (2009-03-05) =
 * Fixed ajax problem.
@@ -190,10 +190,10 @@ You can show favorite link only in preferred posts with writing
 = 1.1.5 (2009-03-02) =
 * Added rel="nofollow" to links.
 * Favorite posts title language problem solved.
-* ajax.js file renamed to wpfp.js
+* ajax.js file renamed to nlsn.js
 * Use XHTML valid links.
 * Use class instead of id for html elements.
-* Use more unique function names. All functions starts with wpfp.
+* Use more unique function names. All functions starts with nlsn.
 
 = 1.2.1 (2009-05-14) =
 * Added "Most Favorited Posts" widget.
@@ -208,9 +208,9 @@ You can show favorite link only in preferred posts with writing
 
 = 1.1.7 (2009-03-10) =
 * Fixed duplicate loading image problem
-* Added [wpfp-link] feature;
+* Added [nlsn-link] feature;
 You can show favorite link only in preferred posts with writing
-[wpfp-link] to the post content.
+[nlsn-link] to the post content.
 
 = 1.1.6 (2009-03-05) =
 * Fixed ajax problem.
@@ -218,10 +218,10 @@ You can show favorite link only in preferred posts with writing
 = 1.1.5 (2009-03-02) =
 * Added rel="nofollow" to links.
 * Favorite posts title language problem solved.
-* ajax.js file renamed to wpfp.js
+* ajax.js file renamed to nlsn.js
 * Use XHTML valid links.
 * Use class instead of id for html elements.
-* Use more unique function names. All functions starts with wpfp.
+* Use more unique function names. All functions starts with nlsn.
 
 = 1.1.4 (2009-02-24) =
 * Use permalinks favorite links.

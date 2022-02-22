@@ -2,7 +2,7 @@
 	"name" : "WP Favorite Posts",
 	"slug" : "wp-favorite-posts",
 	"author" : "<a href='https://alto-palo.com'>Alto Palo</a>",
-	"author_profile" : "http://profiles.wordpress.org/prateekdarmwal",
+	"author_profile" : "https://github.com/awvenezia",
 	"version" : "1.7.2",
 	"download_url" : "https://github.com/awvenezia/wp-favorite-posts/archive/refs/tags/latest.zip",
 	"requires" : "4.4",

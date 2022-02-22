@@ -28,9 +28,11 @@ function nlsn_do_js( dhis, doAjax ) {
                 } else {
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "", 30);
                 }
-                dhis.parent().html(data);
+                if(data!=''){
+                    dhis.parent().html(data);
+                }
                 if(typeof nlsn_after_ajax == 'function') {
-                    nlsn_after_ajax( dhis ); // use this like a wp action.
+                    // nlsn_after_ajax( dhis ); // use this like a wp action.
                 }
                 loadingImg.hide();
             }
