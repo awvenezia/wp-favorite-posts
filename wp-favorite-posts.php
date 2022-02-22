@@ -672,7 +672,7 @@ function nlsn_update_post_meta( $post_id, $val ) {
 	if ( -1 === (int)$val && 0 === (int)$oldval ) {
 		$val = 0;
 	} else {
-		$val = $oldval + $val;
+		$val = (int)$oldval + (int)$val;
 	}
 	return add_post_meta( $post_id, NLSN_META_KEY, $val, true ) || update_post_meta( $post_id, NLSN_META_KEY, $val );
 }
@@ -743,7 +743,7 @@ function nlsn_get_user_meta( $user = '' ) {
  */
 function nlsn_get_post_meta( $post_id ) {
 	$val = get_post_meta( $post_id, NLSN_META_KEY, true );
-	if ( $val < 0 ) {
+	if ( (int)$val < 0 ) {
 		$val = 0;
 	}
 	return $val;
