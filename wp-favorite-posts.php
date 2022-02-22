@@ -598,11 +598,33 @@ function nlsn_wp_print_styles() {
 add_action( 'wp_print_styles', 'nlsn_wp_print_styles' );
 
 /**
- * Function nlsn_init
+ * Function calls after the plugin is activated nlsn_wpfp_activate
  *
  * @return void
  */
-function nlsn_init() {
+function nlsn_wpfp_activate() {
+	$nlsn_option = nlsn_get_default_wpfp_options();
+	add_option( 'nlsn_options', $nlsn_options );
+}
+
+/**
+ * Function calls after the plugin is deactivated nlsn_wpfp_deactivate
+ *
+ * @return void
+ */
+function nlsn_wpfp_deactivate() {
+	delete_option('nlsn_options');
+}
+
+register_activation_hook( NLSN_PLUGIN_PATH, 'nlsn_wpfp_activate' );
+register_deactivation_hook( NLSN_PLUGIN_PATH, 'nlsn_wpfp_deactivate' );
+
+/**
+ * Get default options for plugin nlsn_get_default_wpfp_option
+ *
+ * @return array
+ */
+function nlsn_get_default_wpfp_option() {
 	$nlsn_options                         = array();
 	$nlsn_options['add_favorite']         = 'Add to favorites';
 	$nlsn_options['added']                = 'Added to favorites!';
@@ -625,9 +647,8 @@ function nlsn_init() {
 	$nlsn_options['post_per_page']        = 20;
 	$nlsn_options['autoshow']             = '';
 	$nlsn_options['opt_only_registered']  = 0;
-	add_option( 'nlsn_options', $nlsn_options );
+	return $nlsn_options;
 }
-add_action( 'activate_wp-favorite-posts/wp-favorite-posts.php', 'nlsn_init' );
 
 /**
  * Function nlsn_config
@@ -852,7 +873,11 @@ function nlsn_cookie_warning() {
  */
 function nlsn_get_option( $opt ) {
 	$nlsn_options = nlsn_get_options();
-	return htmlspecialchars_decode( stripslashes( $nlsn_options[ $opt ] ) );
+	if(is_array($nlsn_options) && array_key_exists($opt, $nlsn_options) ) {
+		return htmlspecialchars_decode( stripslashes( $nlsn_options[ $opt ] ) );
+	} else {
+		return "";
+	}
 }
 
 // User favorite list loaded using ajax to prevent cache issue.
