@@ -48,7 +48,7 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 		 */
 		public function __construct() {
 
-			$this->plugin_slug   = plugin_basename( __DIR__ );
+			$this->plugin_slug   = NLSN_PLUGIN_SLUG;;
 			$this->version       = '1.7.3';
 			$this->cache_key     = 'custom_upd';
 			$this->cache_allowed = false;
@@ -191,7 +191,7 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 			) {
 				$res              = new stdClass();
 				$res->slug        = $this->plugin_slug;
-				$res->plugin      = plugin_basename( __FILE__ );
+				$res->plugin      = NLSN_PLUGIN_PATH;
 				$res->new_version = $remote->version;
 				$res->tested      = $remote->tested;
 				$res->package     = $remote->download_url;

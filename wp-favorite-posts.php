@@ -33,6 +33,8 @@ define( 'NLSN_PATH', plugins_url("",__FILE__) );
 define( 'NLSN_META_KEY', 'nlsn_favorites' );
 define( 'NLSN_USER_OPTION_KEY', 'nlsn_useroptions' );
 define( 'NLSN_COOKIE_KEY', 'wp-favorite-posts' );
+define( 'NLSN_PLUGIN_PATH', plugin_basename(__FILE__) );
+define( 'NLSN_PLUGIN_SLUG', plugin_basename( __DIR__ ) );
 
 // manage default privacy of users favorite post lists by adding this constant to wp-config.php.
 if ( ! defined( 'NLSN_DEFAULT_PRIVACY_SETTING' ) ) {
