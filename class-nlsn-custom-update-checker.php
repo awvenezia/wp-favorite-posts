@@ -48,7 +48,8 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 		 */
 		public function __construct() {
 
-			$this->plugin_slug   = NLSN_PLUGIN_SLUG;;
+			$this->plugin_slug = NLSN_PLUGIN_SLUG;
+
 			$this->version       = '1.7.3';
 			$this->cache_key     = 'custom_upd';
 			$this->cache_allowed = false;
@@ -70,7 +71,7 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 
 			if ( false === $remote || ! $this->cache_allowed ) {
 
-				if (function_exists('vip_safe_wp_remote_get')) {
+				if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 					$remote = vip_safe_wp_remote_get(
 						'https://raw.githubusercontent.com/awvenezia/wp-favorite-posts/main/info.json',
 						array(

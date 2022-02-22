@@ -94,17 +94,17 @@ jQuery(document).ready(function($) {
 	<div title="<?php esc_attr_e( 'Click to open/close', 'nielsen' ); ?>" class="handlediv">
 		<br>
 	</div>
-	<h3 class="hndle"><span><?php _e( 'Options', 'nielsen' ); ?></span></h3>
+	<h3 class="hndle"><span><?php esc_html_e( 'Options', 'nielsen' ); ?></span></h3>
 	<div class="inside" style="display: block;">
 
 		<table class="form-table">
 			<tr>
-				<th><?php _e( 'Only <strong>registered users</strong> can favorite', 'nielsen' ); ?></th>
+				<th><?php wp_kses_post( 'Only <strong>registered users</strong> can favorite', 'nielsen' ); ?></th>
 				<td><input type="checkbox" name="opt_only_registered" value="1" <?= ( '1' === stripslashes( $nlsn_options['opt_only_registered'] ) ? "checked='checked'" : '' ) ?>/></td>
 			</tr>
 
 			<tr>
-				<th><?php _e( 'Auto show favorite link', 'nielsen' ); ?></th>
+				<th><?php esc_html_e( 'Auto show favorite link', 'nielsen' ); ?></th>
 				<td>
 					<select name="autoshow">
 						<option value="custom" 
@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
 			</tr>
 
 			<tr>
-				<th><?php _e( 'Before Link Image', 'nielsen' ); ?></th>
+				<th><?php esc_html_e( 'Before Link Image', 'nielsen' ); ?></th>
 				<td>
 					<p>
 					<?php
@@ -140,9 +140,9 @@ jQuery(document).ready(function($) {
 					$nlsn_images[] = 'bullet_star.png';
 					foreach ( $nlsn_images as $nlsn_img ) :
 						?>
-					<label for="<?php echo wp_kses_post( $nlsn_img ); ?>">
-						<input type="radio" name="before_image" id="<?php echo esc_attr( $nlsn_img ); ?>" value="<?php esc_attr_e( $nlsn_img, 'nielsen' ); ?>" <?= $nlsn_options['before_image'] === $nlsn_img ? "checked='checked'" : '' ?>/>
-						<img src="<?php echo esc_url( NLSN_PATH . '/img/' . $nlsn_img ); ?>" alt="<?php esc_attr( $nlsn_img ); ?>" title="<?php echo esc_attr( $nlsn_img ); ?>" class="nlsn-img" />
+					<label for="<?php echo esc_attr( $nlsn_img ); ?>">
+						<input type="radio" name="before_image" id="<?php echo esc_attr( $nlsn_img ); ?>" value="<?php echo esc_attr( $nlsn_img ); ?>" <?= $nlsn_options['before_image'] === $nlsn_img ? "checked='checked'" : '' ?>/>
+						<img src="<?php echo esc_url( NLSN_PATH . '/img/' . $nlsn_img ); ?>" alt="<?php echo esc_attr( $nlsn_img ); ?>" title="<?php echo esc_attr( $nlsn_img ); ?>" class="nlsn-img" />
 					</label><br/>
 						<?php
 					endforeach;
@@ -151,7 +151,7 @@ jQuery(document).ready(function($) {
 						<input type="radio" name="before_image" id="custom" value="custom" <?= ( 'custom' === $nlsn_options['before_image'] ) ? "checked='checked'" : '' ?> />
 						Custom Image URL :
 					</label>
-					<input type="custom_before_image" name="custom_before_image" value="<?php echo wp_kses_post( stripslashes( $nlsn_options['custom_before_image'] ) ); ?>" />
+					<input type="custom_before_image" name="custom_before_image" value="<?php echo esc_attr( stripslashes( $nlsn_options['custom_before_image'] ) ); ?>" />
 					<br />
 					<label for="none">
 						<input type="radio" name="before_image" id="none" value="" <?= ( '' === $nlsn_options['before_image'] ) ? "checked='checked'" : '' ?> />
@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
 			<tr>
 				<th><?php esc_html_e( 'Favorite post per page', 'nielsen' ); ?></th>
 				<td>
-					<input type="text" name="post_per_page" size="2" value="<?php esc_attr_e( stripslashes( $nlsn_options['post_per_page'] ) ); ?>" /> * This only works with default favorite post list page (nlsn-page-template.php).
+					<input type="text" name="post_per_page" size="2" value="<?php echo esc_attr( stripslashes( $nlsn_options['post_per_page'] ) ); ?>" /> * This only works with default favorite post list page (nlsn-page-template.php).
 				</td>
 			</tr>
 			<tr>

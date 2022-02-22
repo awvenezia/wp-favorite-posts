@@ -29,11 +29,11 @@
 */
 
 define( 'NLSN_JS_VERSION', '1.7.3' );
-define( 'NLSN_PATH', plugins_url("",__FILE__) );
+define( 'NLSN_PATH', plugins_url( '', __FILE__ ) );
 define( 'NLSN_META_KEY', 'nlsn_favorites' );
 define( 'NLSN_USER_OPTION_KEY', 'nlsn_useroptions' );
 define( 'NLSN_COOKIE_KEY', 'wp-favorite-posts' );
-define( 'NLSN_PLUGIN_PATH', plugin_basename(__FILE__) );
+define( 'NLSN_PLUGIN_PATH', plugin_basename( __FILE__ ) );
 define( 'NLSN_PLUGIN_SLUG', plugin_basename( __DIR__ ) );
 
 // manage default privacy of users favorite post lists by adding this constant to wp-config.php.
@@ -121,7 +121,7 @@ function nlsn_add_favorite( $post_id = '' ) {
 				nlsn_die_or_go( nlsn_get_option( 'added' ) );
 			}
 		} else {
-			nlsn_die_or_go("");
+			nlsn_die_or_go( '' );
 		}
 	}
 }
@@ -223,7 +223,7 @@ function nlsn_check_favorited( $cid ) {
 		$nlsn_favorite_post_ids = nlsn_get_user_meta();
 		if ( $nlsn_favorite_post_ids ) {
 			foreach ( $nlsn_favorite_post_ids as $fpost_id ) {
-				if ( (int)$fpost_id === (int)$cid ) {
+				if ( (int) $fpost_id === (int) $cid ) {
 					return true;
 				}
 			}
@@ -231,7 +231,7 @@ function nlsn_check_favorited( $cid ) {
 	} else {
 		if ( nlsn_get_cookie() ) :
 			foreach ( nlsn_get_cookie() as $fpost_id => $val ) {
-				if ( (int)$fpost_id === (int)$cid && ! empty( $val ) ) {
+				if ( (int) $fpost_id === (int) $cid && ! empty( $val ) ) {
 					return true;
 				}
 			}
@@ -573,7 +573,7 @@ function nlsn_http_parse_cookie( $cookie_string ) {
  */
 function nlsn_add_js_script() {
 	if ( ! nlsn_get_option( 'dont_load_js_file' ) ) {
-		wp_register_script( 'wp_favorite_posts',  plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery' ), NLSN_JS_VERSION, true );
+		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery' ), NLSN_JS_VERSION, true );
 		// Register the JS file with a unique handle, file location, and an array of dependencies.
 		wp_register_script( 'get_cookies', plugin_dir_url( __FILE__ ) . 'get_cookies.js', array( 'jquery' ), NLSN_JS_VERSION, true );
 		// localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily.
@@ -603,7 +603,7 @@ add_action( 'wp_print_styles', 'nlsn_wp_print_styles' );
  * @return void
  */
 function nlsn_wpfp_activate() {
-	$nlsn_option = nlsn_get_default_wpfp_options();
+	$nlsn_options = nlsn_get_default_wpfp_options();
 	add_option( 'nlsn_options', $nlsn_options );
 }
 
@@ -613,7 +613,7 @@ function nlsn_wpfp_activate() {
  * @return void
  */
 function nlsn_wpfp_deactivate() {
-	delete_option('nlsn_options');
+	delete_option( 'nlsn_options' );
 }
 
 register_activation_hook( NLSN_PLUGIN_PATH, 'nlsn_wpfp_activate' );
@@ -690,10 +690,10 @@ function nlsn_update_user_meta( $arr ) {
  */
 function nlsn_update_post_meta( $post_id, $val ) {
 	$oldval = nlsn_get_post_meta( $post_id );
-	if ( -1 === (int)$val && 0 === (int)$oldval ) {
+	if ( -1 === (int) $val && 0 === (int) $oldval ) {
 		$val = 0;
 	} else {
-		$val = (int)$oldval + (int)$val;
+		$val = (int) $oldval + (int) $val;
 	}
 	return add_post_meta( $post_id, NLSN_META_KEY, $val, true ) || update_post_meta( $post_id, NLSN_META_KEY, $val );
 }
@@ -764,7 +764,7 @@ function nlsn_get_user_meta( $user = '' ) {
  */
 function nlsn_get_post_meta( $post_id ) {
 	$val = get_post_meta( $post_id, NLSN_META_KEY, true );
-	if ( (int)$val < 0 ) {
+	if ( (int) $val < 0 ) {
 		$val = 0;
 	}
 	return $val;
@@ -873,10 +873,10 @@ function nlsn_cookie_warning() {
  */
 function nlsn_get_option( $opt ) {
 	$nlsn_options = nlsn_get_options();
-	if(is_array($nlsn_options) && array_key_exists($opt, $nlsn_options) ) {
+	if ( is_array( $nlsn_options ) && array_key_exists( $opt, $nlsn_options ) ) {
 		return htmlspecialchars_decode( stripslashes( $nlsn_options[ $opt ] ) );
 	} else {
-		return "";
+		return '';
 	}
 }
 
