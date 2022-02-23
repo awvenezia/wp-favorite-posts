@@ -620,11 +620,11 @@ register_activation_hook( NLSN_PLUGIN_PATH, 'nlsn_wpfp_activate' );
 register_deactivation_hook( NLSN_PLUGIN_PATH, 'nlsn_wpfp_deactivate' );
 
 /**
- * Get default options for plugin nlsn_get_default_wpfp_option
+ * Get default options for plugin nlsn_get_default_wpfp_options
  *
  * @return array
  */
-function nlsn_get_default_wpfp_option() {
+function nlsn_get_default_wpfp_options() {
 	$nlsn_options                         = array();
 	$nlsn_options['add_favorite']         = 'Add to favorites';
 	$nlsn_options['added']                = 'Added to favorites!';
