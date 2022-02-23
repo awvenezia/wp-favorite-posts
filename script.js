@@ -23,13 +23,13 @@ function nlsn_do_js( dhis, doAjax ) {
     params = dhis.attr('href').replace('?', '') + '&ajax=1';
     if ( doAjax ) {
         jQuery.get(url, params, function(data) {
-                if(action == 'add'){
+                if( 'add' == action){
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "added", 30);
                 } else {
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "", 30);
                 }
-                if(data!=''){
-                    dhis.parent().html(data);
+                if('' != data){
+                    dhis.parent().html(wpfpEscapeHTML(data));
                 }
                 if(typeof nlsn_after_ajax == 'function') {
                     // nlsn_after_ajax( dhis ); // use this like a wp action.
@@ -57,7 +57,20 @@ function nlsn_user_favorite_list() {
     params = 'nlsnaction=user-favorite-list&ajax=1';
 
     jQuery.get(url, params, function(data) {
-            mylist.html(data);
+            mylist.html(wpfpEscapeHTML(data));
         }
     );
 }
+
+const wpfpEscapeHTML = (s) => (s || '').replace(/[<>"]/g, (c) => {
+    switch (c) {
+    case '<':
+      return '&lt;';
+    case '>':
+      return '&gt;';
+    case '"':
+      return '&quot;';
+    default:
+      throw new Error(`Invalid HTML escape character: '${c}'`);
+    }
+});
