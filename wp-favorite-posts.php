@@ -406,9 +406,9 @@ function nlsn_before_link_img() {
 	if ( empty( $option ) ) {
 		return '';
 	} elseif ( 'custom' === $option ) {
-		return "<img src='" . $options['custom_before_image'] . "' alt='Favorite' title='Favorite' class='nlsn-img' />";
+		return "<img src='" . $options['custom_before_image'] . "' alt='Favorite' title='Favorite' class='nlsn-img' style='display:none;' />";
 	} else {
-		return "<img src='" . NLSN_PATH . '/img/' . $option . "' alt='Favorite' title='Favorite' class='nlsn-img' />";
+		return "<img src='" . NLSN_PATH . '/img/' . $option . "' alt='Favorite' title='Favorite' class='nlsn-img' style='display:none;' />";
 	}
 }
 
