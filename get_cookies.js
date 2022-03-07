@@ -55,7 +55,7 @@ const WP_FAV_COOKIE = 'wp-favorite-posts';
             data : {action: "nlsn_fetch_cookies", cookie_string : cookieString},
             success: function(response) {
                if(response.type == "success") {
-                  console.log("Updated Fav Posts")
+                  console.log("Updated Fav Posts");
                }
                else {
                   console.log("SWW on updating Fav posts");

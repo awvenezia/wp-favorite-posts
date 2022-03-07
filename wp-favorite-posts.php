@@ -573,15 +573,13 @@ function nlsn_http_parse_cookie( $cookie_string ) {
  */
 function nlsn_add_js_script() {
 	if ( ! nlsn_get_option( 'dont_load_js_file' ) ) {
-		wp_enqueue_script('purify',  plugin_dir_url( __FILE__ ) . 'purify.min.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
-		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
-		// Register the JS file with a unique handle, file location, and an array of dependencies.
-		wp_register_script( 'get_cookies', plugin_dir_url( __FILE__ ) . 'get_cookies.js', array( 'jquery' ), NLSN_JS_VERSION, true );
-		// localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily.
+		wp_enqueue_script('purify',  plugin_dir_url( __FILE__ ) . 'purify.min.js', array( 'jquery' ), NLSN_JS_VERSION, true );
+		wp_register_script( 'get_cookies', plugin_dir_url( __FILE__ ) . 'get_cookies.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
 		wp_localize_script( 'get_cookies', 'fetchCookies', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );        
+		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery', 'purify', 'get_cookies' ), NLSN_JS_VERSION, true );
 		// enqueue the script you registered above.
-		wp_enqueue_script( 'wp_favorite_posts' );
 		wp_enqueue_script( 'get_cookies' );
+		wp_enqueue_script( 'wp_favorite_posts' );
 	}
 }
 add_action( 'wp_print_scripts', 'nlsn_add_js_script' );
