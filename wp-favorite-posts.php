@@ -187,7 +187,7 @@ function nlsn_remove_favorite( $post_id = '' ) {
 function nlsn_die_or_go( $str ) {
 	global $nlsn_ajax_mode;
 	if ( $nlsn_ajax_mode ) :
-		die( wp_kses_data( $str ) );
+		die( wp_kses_post( $str ));
 	else :
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
