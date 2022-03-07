@@ -591,7 +591,7 @@ add_action( 'wp_print_scripts', 'nlsn_add_js_script' );
  */
 function nlsn_wp_print_styles() {
 	if ( ! nlsn_get_option( 'dont_load_css_file' ) ) {
-		wp_enqueue_style( 'nlsn-css', plugin_dir_url( __FILE__ ) . 'nlsn.css', array(), NLSN_JS_VERSION, 'screen' );
+		wp_enqueue_style( 'nlsn-css', plugin_dir_url( __FILE__ ) . 'nlsn_wpfp.css', array(), NLSN_JS_VERSION, 'screen' );
 	}
 }
 add_action( 'wp_print_styles', 'nlsn_wp_print_styles' );
