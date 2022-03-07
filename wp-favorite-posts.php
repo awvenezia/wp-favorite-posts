@@ -3,7 +3,7 @@
  * Plugin Name: WP Favorite Posts
  * Plugin URI: https://github.com/awvenezia/wp-favorite-posts
  * Description: Allows users to add favorite posts. This plugin use cookies for saving data so unregistered users can favorite a post. Put <code>&lt;?php nlsn_link(); ?&gt;</code> where ever you want on a single post. Then create a page which includes that text : <code>[wp-favorite-posts]</code> That's it!
- * Version: 1.7.3
+ * Version: 1.7.4
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -28,7 +28,7 @@
 
 */
 
-define( 'NLSN_JS_VERSION', '1.7.3' );
+define( 'NLSN_JS_VERSION', '1.7.4' );
 define( 'NLSN_PATH', plugins_url( '', __FILE__ ) );
 define( 'NLSN_META_KEY', 'nlsn_favorites' );
 define( 'NLSN_USER_OPTION_KEY', 'nlsn_useroptions' );
@@ -251,7 +251,7 @@ function nlsn_check_favorited( $cid ) {
  */
 function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() ) {
 	global $post;
-	$post_id = $post->ID;
+	$post_id = get_the_ID();
 	if ( ! empty( $args ) ) {
 		foreach ( $args as $key => $val ) {
 			${$key} = $val; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -573,7 +573,8 @@ function nlsn_http_parse_cookie( $cookie_string ) {
  */
 function nlsn_add_js_script() {
 	if ( ! nlsn_get_option( 'dont_load_js_file' ) ) {
-		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery' ), NLSN_JS_VERSION, true );
+		wp_enqueue_script('purify',  plugin_dir_url( __FILE__ ) . 'purify.min.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
+		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
 		// Register the JS file with a unique handle, file location, and an array of dependencies.
 		wp_register_script( 'get_cookies', plugin_dir_url( __FILE__ ) . 'get_cookies.js', array( 'jquery' ), NLSN_JS_VERSION, true );
 		// localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily.

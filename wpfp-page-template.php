@@ -1,6 +1,6 @@
 <?php
 /**
- * Version: 1.7.3
+ * Version: 1.7.4
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 

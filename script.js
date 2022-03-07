@@ -29,7 +29,8 @@ function nlsn_do_js( dhis, doAjax ) {
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "", 30);
                 }
                 if('' != data){
-                    dhis.parent().html(wpfpEscapeHTML(data));
+                    let cleanData = DOMPurify.sanitize(data);
+                    dhis.parent().html(cleanData);
                 }
                 if(typeof nlsn_after_ajax == 'function') {
                     // nlsn_after_ajax( dhis ); // use this like a wp action.
@@ -57,9 +58,9 @@ function nlsn_user_favorite_list() {
     params = 'nlsnaction=user-favorite-list&ajax=1';
 
     jQuery.get(url, params, function(data) {
-            mylist.html(wpfpEscapeHTML(data));
-        }
-    );
+            let cleanData = DOMPurify.sanitize(data);
+            mylist.html(wpfpEscapeHTML(cleanData));
+    });
 }
 
 const wpfpEscapeHTML = (s) => (s || '').replace(/[<>"]/g, (c) => {
