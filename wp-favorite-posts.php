@@ -251,6 +251,9 @@ function nlsn_check_favorited( $cid ) {
  */
 function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() ) {
 	$nlsn_post_id = get_the_ID();
+	if(empty($nlsn_post_id) && isset($_REQUEST['postid'])) {
+		$nlsn_post_id = $_REQUEST['postid'];
+	}
 	if ( ! empty( $args ) ) {
 		foreach ( $args as $key => $val ) {
 			${$key} = $val; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
