@@ -99,7 +99,7 @@ jQuery(document).ready(function($) {
 
 		<table class="form-table">
 			<tr>
-				<th><?php wp_kses_post( 'Only <strong>registered users</strong> can favorite', 'nielsen' ); ?></th>
+				<th><?php echo wp_kses_post( 'Only <strong>registered users</strong> can favorite', 'nielsen' ); ?></th>
 				<td><input type="checkbox" name="opt_only_registered" value="1" <?= ( '1' === stripslashes( $nlsn_options['opt_only_registered'] ) ? "checked='checked'" : '' ) ?>/></td>
 			</tr>
 
