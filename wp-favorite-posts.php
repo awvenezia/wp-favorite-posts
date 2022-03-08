@@ -260,11 +260,11 @@ function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() )
 		}
 	}
 	$str = '';
-	if(nlsn_get_option( 'statistics' ) && nlsn_get_option('show_stats')) {
-		$str = "<span class='nlsn-span-stats'>" . trim(nlsn_get_post_meta($nlsn_post_id)) . "</span>";
-	}
 	if ( $show_span ) {
 		$str = "<span class='nlsn-span'>";
+	}
+	if(nlsn_get_option( 'statistics' ) && nlsn_get_option('show_stats')) {
+		$str .= "<span class='nlsn-span-stats'>" . trim(nlsn_get_post_meta($nlsn_post_id)) . "</span>";
 	}
 	$str .= nlsn_before_link_img();
 	$str .= nlsn_loading_img();
