@@ -3,7 +3,7 @@
  * Plugin Name: WP Favorite Posts
  * Plugin URI: https://github.com/awvenezia/wp-favorite-posts
  * Description: Allows users to add favorite posts. This plugin use cookies for saving data so unregistered users can favorite a post. Put <code>&lt;?php nlsn_link(); ?&gt;</code> where ever you want on a single post. Then create a page which includes that text : <code>[wp-favorite-posts]</code> That's it!
- * Version: 1.7.5
+ * Version: 1.7.6
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -28,7 +28,7 @@
 
 */
 
-define( 'NLSN_JS_VERSION', '1.7.5' );
+define( 'NLSN_JS_VERSION', '1.7.6' );
 define( 'NLSN_PATH', plugins_url( '', __FILE__ ) );
 define( 'NLSN_META_KEY', 'nlsn_favorites' );
 define( 'NLSN_USER_OPTION_KEY', 'nlsn_useroptions' );
@@ -250,27 +250,29 @@ function nlsn_check_favorited( $cid ) {
  * @return array|string
  */
 function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() ) {
-	global $post;
-	$post_id = get_the_ID();
+	$nlsn_post_id = get_the_ID();
 	if ( ! empty( $args ) ) {
 		foreach ( $args as $key => $val ) {
 			${$key} = $val; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		}
 	}
 	$str = '';
+	if(nlsn_get_option( 'statistics' ) && nlsn_get_option('show_stats')) {
+		$str = "<span class='nlsn-span-stats'>" . trim(nlsn_get_post_meta($nlsn_post_id)) . "</span>";
+	}
 	if ( $show_span ) {
 		$str = "<span class='nlsn-span'>";
 	}
 	$str .= nlsn_before_link_img();
 	$str .= nlsn_loading_img();
 	if ( 'remove' === $action ) :
-		$str .= nlsn_link_html( $post_id, nlsn_get_option( 'remove_favorite' ), 'remove' );
+		$str .= nlsn_link_html( $nlsn_post_id, nlsn_get_option( 'remove_favorite' ), 'remove' );
 	elseif ( 'add' === $action ) :
-		$str .= nlsn_link_html( $post_id, nlsn_get_option( 'add_favorite' ), 'add' );
-	elseif ( nlsn_check_favorited( $post_id ) ) :
-		$str .= nlsn_link_html( $post_id, nlsn_get_option( 'remove_favorite' ), 'remove' );
+		$str .= nlsn_link_html( $nlsn_post_id, nlsn_get_option( 'add_favorite' ), 'add' );
+	elseif ( nlsn_check_favorited( $nlsn_post_id ) ) :
+		$str .= nlsn_link_html( $nlsn_post_id, nlsn_get_option( 'remove_favorite' ), 'remove' );
 	else :
-		$str .= nlsn_link_html( $post_id, nlsn_get_option( 'add_favorite' ), 'add' );
+		$str .= nlsn_link_html( $nlsn_post_id, nlsn_get_option( 'add_favorite' ), 'add' );
 	endif;
 	if ( $show_span ) {
 		$str .= '</span>';
@@ -505,6 +507,31 @@ function nlsn_shortcode_func() {
 }
 add_shortcode( 'wp-favorite-posts', 'nlsn_shortcode_func' );
 
+/**
+ * Add shortcode for showing fav count nlsn_shortcode_stats
+ *
+ * @param  mixed $atts
+ * @return void
+ */
+function nlsn_shortcode_stats($atts) {
+	$nlsn_post_id = get_queried_object_id();
+	if ( empty( $nlsn_post_id ) && isset( $_REQUEST['postid'] ) ) {
+		$nlsn_post_id = sanitize_key( $_REQUEST['postid'] );
+	}
+	if(nlsn_get_option( 'statistics' )) {
+		$atts = shortcode_atts( array(
+			'post_id' => $nlsn_post_id,
+			'print' => true
+		), $atts, 'nlsn-favorite-stats' );
+		if ($atts['print']) {
+			echo "<span class='nlsn-span-stats'" . sanitize_key(trim(nlsn_get_post_meta($atts['post_id']))) . "</span>";
+		} else {
+			return nlsn_get_post_meta($atts['post_id']);
+		}
+	}
+}
+add_shortcode("nlsn-favorite-stats", "nlsn_shortcode_stats");
+
 add_action( 'wp_ajax_nlsn_fetch_cookies', 'nlsn_fetch_cookies' );
 add_action( 'wp_ajax_nopriv_nlsn_fetch_cookies', 'nlsn_fetch_cookies' );
 
@@ -636,6 +663,7 @@ function nlsn_get_default_wpfp_options() {
 	$nlsn_options['rem']                  = 'remove';
 	$nlsn_options['text_only_registered'] = 'Only registered users can favorite!';
 	$nlsn_options['statistics']           = 1;
+	$nlsn_options['show_stats']           = 1;
 	$nlsn_options['widget_title']         = '';
 	$nlsn_options['widget_limit']         = 5;
 	$nlsn_options['uf_widget_limit']      = 5;

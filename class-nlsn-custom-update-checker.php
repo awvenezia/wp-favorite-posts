@@ -1,6 +1,6 @@
 <?php
 /**
- * Version: 1.7.5
+ * Version: 1.7.6
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -50,7 +50,7 @@ if ( ! class_exists( 'Nlsn_Custom_Update_Checker' ) ) {
 
 			$this->plugin_slug = NLSN_PLUGIN_SLUG;
 
-			$this->version       = '1.7.5';
+			$this->version       = '1.7.6';
 			$this->cache_key     = 'custom_upd';
 			$this->cache_allowed = false;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Version: 1.7.5
+ * Version: 1.7.6
  * Author: Alto-Palo
  * Author URI: https://github.com/awvenezia
  * 
@@ -171,6 +171,13 @@ jQuery(document).ready(function($) {
 				<td>
 					<label for="stats-enabled"><input type="radio" name="statistics" id="stats-enabled" value="1" <?= $nlsn_options['statistics'] ? "checked='checked'" : '' ?> />Enabled</label>
 					<label for="stats-disabled"><input type="radio" name="statistics" id="stats-disabled" value="0" <?= ! $nlsn_options['statistics'] ? "checked='checked'" : '' ?> /> Disabled</label>
+				</td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'Show favorited posts statistics with favorite button', 'nielsen' ); ?>*</th>
+				<td>
+					<label for="stats-enabled"><input type="radio" name="show_stats" id="stats-enabled" value="1" <?= $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> />Enabled</label>
+					<label for="stats-disabled"><input type="radio" name="show_stats" id="stats-disabled" value="0" <?= ! $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> /> Disabled</label>
 				</td>
 			</tr>
 			<tr><td></td>
