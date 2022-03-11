@@ -252,7 +252,7 @@ function nlsn_check_favorited( $cid ) {
 function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() ) {
 	$nlsn_post_id = get_the_ID();
 	if(empty($nlsn_post_id) && isset($_REQUEST['postid'])) {
-		$nlsn_post_id = $_REQUEST['postid'];
+		$nlsn_post_id = sanitize_key($_REQUEST['postid']);
 	}
 	if ( ! empty( $args ) ) {
 		foreach ( $args as $key => $val ) {
@@ -513,8 +513,8 @@ add_shortcode( 'wp-favorite-posts', 'nlsn_shortcode_func' );
 /**
  * Add shortcode for showing fav count nlsn_shortcode_stats
  *
- * @param  mixed $atts
- * @return void
+ * @param  mixed $atts Attributes for shortcode.
+ * @return mixed
  */
 function nlsn_shortcode_stats($atts) {
 	$nlsn_post_id = get_queried_object_id();
