@@ -66,7 +66,7 @@ add_action( 'plugins_loaded', 'nlsn_load_translation' );
  */
 function nlsn_wp_favorite_posts() {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( null === $nonce && ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce && ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		return;
 	} else {
 		if ( isset( $_REQUEST['_wpnonce'] ) && isset( $_REQUEST['nlsnaction'] ) ) :
@@ -98,7 +98,7 @@ add_action( 'wp_loaded', 'nlsn_wp_favorite_posts' );
  */
 function nlsn_add_favorite( $post_id = '' ) {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce && ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		die( esc_html( __( 'Security check failes', 'nielsen' ) ) ); 
 	} else {
 		if ( empty( $post_id ) && isset( $_REQUEST['postid'] ) ) {
@@ -151,7 +151,7 @@ function nlsn_do_add_to_list( $post_id ) {
  */
 function nlsn_remove_favorite( $post_id = '' ) {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce &&  ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		die( esc_html( __( 'Security check', 'nielsen' ) ) ); 
 	} else {
 		if ( empty( $post_id ) && isset( $_REQUEST['postid'] ) ) {
@@ -187,7 +187,7 @@ function nlsn_remove_favorite( $post_id = '' ) {
 function nlsn_die_or_go( $str ) {
 	global $nlsn_ajax_mode;
 	if ( $nlsn_ajax_mode ) :
-		die( wp_kses_post( $str ));
+		die( wp_kses_post( $str ) );
 	else :
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
@@ -251,8 +251,8 @@ function nlsn_check_favorited( $cid ) {
  */
 function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() ) {
 	$nlsn_post_id = get_the_ID();
-	if(empty($nlsn_post_id) && isset($_REQUEST['postid'])) {
-		$nlsn_post_id = sanitize_key($_REQUEST['postid']);
+	if ( empty( $nlsn_post_id ) && isset( $_REQUEST['postid'] ) ) {
+		$nlsn_post_id = sanitize_key( $_REQUEST['postid'] );
 	}
 	if ( ! empty( $args ) ) {
 		foreach ( $args as $key => $val ) {
@@ -263,8 +263,8 @@ function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() )
 	if ( $show_span ) {
 		$str = "<span class='nlsn-span'>";
 	}
-	if(nlsn_get_option( 'statistics' ) && nlsn_get_option('show_stats')) {
-		$str .= "<span class='nlsn-span-stats'>" . trim(nlsn_get_post_meta($nlsn_post_id)) . "</span>";
+	if ( nlsn_get_option( 'statistics' ) && nlsn_get_option( 'show_stats' ) ) {
+		$str .= "<span class='nlsn-span-stats'>" . trim( nlsn_get_post_meta( $nlsn_post_id ) ) . '</span>';
 	}
 	$str .= nlsn_before_link_img();
 	$str .= nlsn_loading_img();
@@ -451,7 +451,7 @@ function nlsn_clear_favorites() {
  */
 function nlsn_do_remove_favorite( $post_id ) {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce &&  ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		die( esc_html( __( 'Security check', 'nielsen' ) ) ); 
 	} else {
 		if ( ! nlsn_check_favorited( $post_id ) ) {
@@ -516,24 +516,28 @@ add_shortcode( 'wp-favorite-posts', 'nlsn_shortcode_func' );
  * @param  mixed $atts Attributes for shortcode.
  * @return mixed
  */
-function nlsn_shortcode_stats($atts) {
+function nlsn_shortcode_stats( $atts ) {
 	$nlsn_post_id = get_queried_object_id();
 	if ( empty( $nlsn_post_id ) && isset( $_REQUEST['postid'] ) ) {
 		$nlsn_post_id = sanitize_key( $_REQUEST['postid'] );
 	}
-	if(nlsn_get_option( 'statistics' )) {
-		$atts = shortcode_atts( array(
-			'post_id' => $nlsn_post_id,
-			'print' => true
-		), $atts, 'nlsn-favorite-stats' );
-		if ($atts['print']) {
-			echo "<span class='nlsn-span-stats'" . sanitize_key(trim(nlsn_get_post_meta($atts['post_id']))) . "</span>";
+	if ( nlsn_get_option( 'statistics' ) ) {
+		$atts = shortcode_atts(
+			array(
+				'post_id' => $nlsn_post_id,
+				'print'   => true,
+			),
+			$atts,
+			'nlsn-favorite-stats' 
+		);
+		if ( $atts['print'] ) {
+			echo "<span class='nlsn-span-stats'" . sanitize_key( trim( nlsn_get_post_meta( $atts['post_id'] ) ) ) . '</span>';
 		} else {
-			return nlsn_get_post_meta($atts['post_id']);
+			return nlsn_get_post_meta( $atts['post_id'] );
 		}
 	}
 }
-add_shortcode("nlsn-favorite-stats", "nlsn_shortcode_stats");
+add_shortcode( 'nlsn-favorite-stats', 'nlsn_shortcode_stats' );
 
 add_action( 'wp_ajax_nlsn_fetch_cookies', 'nlsn_fetch_cookies' );
 add_action( 'wp_ajax_nopriv_nlsn_fetch_cookies', 'nlsn_fetch_cookies' );
@@ -603,7 +607,7 @@ function nlsn_http_parse_cookie( $cookie_string ) {
  */
 function nlsn_add_js_script() {
 	if ( ! nlsn_get_option( 'dont_load_js_file' ) ) {
-		wp_enqueue_script('purify',  plugin_dir_url( __FILE__ ) . 'purify.min.js', array( 'jquery' ), NLSN_JS_VERSION, true );
+		wp_enqueue_script( 'purify', plugin_dir_url( __FILE__ ) . 'purify.min.js', array( 'jquery' ), NLSN_JS_VERSION, true );
 		wp_register_script( 'get_cookies', plugin_dir_url( __FILE__ ) . 'get_cookies.js', array( 'jquery', 'purify' ), NLSN_JS_VERSION, true );
 		wp_localize_script( 'get_cookies', 'fetchCookies', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );        
 		wp_register_script( 'wp_favorite_posts', plugin_dir_url( __FILE__ ) . 'script.js', array( 'jquery', 'purify', 'get_cookies' ), NLSN_JS_VERSION, true );
