@@ -10,7 +10,7 @@ jQuery(document).ready( function($) {
     });
 });
 
-function nlsn_do_js( dhis, doAjax ) {
+function nlsn_do_js( dhis, doAjax, callback ) {
     console.log("Do ajax");
     loadingImg = dhis.prev();
     loadingImg.show();
@@ -24,20 +24,28 @@ function nlsn_do_js( dhis, doAjax ) {
     if ( doAjax ) {
         jQuery.get(url, params, function(data) {
                 if( 'add' == action){
+                    console.log('adding cookie');
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "added", 30);
                 } else {
+                    console.log("removing cookie");
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "", 30);
                 }
                 if('' != data){
-                    let cleanData = DOMPurify.sanitize(data);
-                    dhis.parent().html(cleanData);
+                    if(dhis.hasClass('remove-parent')) {
+                        dhis.parent().parent().fadeOut("slow", function() {
+                            jQuery(this).remove();
+                        });
+                    } else {
+                        let cleanData = DOMPurify.sanitize(data);
+                        dhis.parent().html(cleanData);
+                    }
                 }
                 if(typeof nlsn_after_ajax == 'function') {
                     // nlsn_after_ajax( dhis ); // use this like a wp action.
                 }
                 loadingImg.hide();
             }
-        );
+        ).done(callback);
     }
 }
 

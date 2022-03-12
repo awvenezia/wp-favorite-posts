@@ -32,6 +32,7 @@ if ( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['no
 	$nlsn_options['cookie_warning']       = isset( $_REQUEST['cookie_warning'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['cookie_warning'] ) ) : null;
 	$nlsn_options['text_only_registered'] = isset( $_REQUEST['text_only_registered'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['text_only_registered'] ) ) : null;
 	$nlsn_options['statistics']           = isset( $_REQUEST['statistics'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['statistics'] ) ) : null;
+	$nlsn_options['show_stats']           = isset( $_REQUEST['show_stats'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['show_stats'] ) ) : null;
 	$nlsn_options['before_image']         = isset( $_REQUEST['before_image'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['before_image'] ) ) : null;
 	$nlsn_options['custom_before_image']  = isset( $_REQUEST['custom_before_image'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['custom_before_image'] ) ) : null;
 	$nlsn_options['autoshow']             = isset( $_REQUEST['autoshow'] ) ? htmlspecialchars( sanitize_text_field( $_REQUEST['autoshow'] ) ) : null;
@@ -176,8 +177,8 @@ jQuery(document).ready(function($) {
 			<tr>
 				<th><?php esc_html_e( 'Show favorited posts statistics with favorite button', 'nielsen' ); ?>*</th>
 				<td>
-					<label for="stats-enabled"><input type="radio" name="show_stats" id="stats-enabled" value="1" <?= $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> />Enabled</label>
-					<label for="stats-disabled"><input type="radio" name="show_stats" id="stats-disabled" value="0" <?= ! $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> /> Disabled</label>
+					<label for="show-stats-enabled"><input type="radio" name="show_stats" id="show-stats-enabled" value="1" <?= $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> />Enabled</label>
+					<label for="show-stats-disabled"><input type="radio" name="show_stats" id="show-stats-disabled" value="0" <?= ! $nlsn_options['show_stats'] ? "checked='checked'" : '' ?> /> Disabled</label>
 				</td>
 			</tr>
 			<tr><td></td>

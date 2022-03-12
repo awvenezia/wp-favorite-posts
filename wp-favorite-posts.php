@@ -297,7 +297,7 @@ function nlsn_link( $return = 0, $action = '', $show_span = 1, $args = array() )
 function nlsn_link_html( $post_id, $opt, $action ) {
 	$act_link = '?nlsnaction=' . $action . '&amp;postid=' . esc_attr( $post_id );
 	$act_link = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( $act_link, 'nlsn-update_fav' ) : $act_link;
-	$link     = "<a class='nlsn-link' href='" . $act_link . "' title='" . $opt . "' rel='nofollow'>" . $opt . '</a>';
+	$link     = "<a class='nlsn-link nlsn-" . $action . "' href='" . $act_link . "' title='" . $opt . "' rel='nofollow'>" . $opt . '</a>';
 	$link     = apply_filters( 'nlsn_link_html', $link );
 	return $link;
 }
@@ -670,7 +670,7 @@ function nlsn_get_default_wpfp_options() {
 	$nlsn_options['rem']                  = 'remove';
 	$nlsn_options['text_only_registered'] = 'Only registered users can favorite!';
 	$nlsn_options['statistics']           = 1;
-	$nlsn_options['show_stats']           = 1;
+	$nlsn_options['show_stats']           = 0;
 	$nlsn_options['widget_title']         = '';
 	$nlsn_options['widget_limit']         = 5;
 	$nlsn_options['uf_widget_limit']      = 5;
@@ -868,7 +868,9 @@ function nlsn_remove_favorite_link( $post_id ) {
 	if ( nlsn_is_user_can_edit() ) {
 		$nlsn_options = nlsn_get_options();
 		$class        = 'nlsn-link remove-parent';
-		$link         = "<a id='rem_$post_id' class='$class' href='?nlsnaction=remove&amp;page=1&amp;postid=" . $post_id . "' title='" . nlsn_get_option( 'rem' ) . "' rel='nofollow'>" . nlsn_get_option( 'rem' ) . '</a>';
+		$act_link     = '?nlsnaction=remove&amp;page=1&amp;postid=' . esc_attr( $post_id );
+		$act_link     = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( $act_link, 'nlsn-update_fav' ) : $act_link;
+		$link         = "<a id='rem_$post_id' class='$class' href='". $act_link ."' title='" . nlsn_get_option( 'rem' ) . "' rel='nofollow'>" . nlsn_get_option( 'rem' ) . '</a>';
 		$link         = apply_filters( 'nlsn_remove_favorite_link', $link );
 		echo wp_kses_post( $link );
 	}
@@ -884,7 +886,7 @@ function nlsn_clear_list_link() {
 		$nlsn_options = nlsn_get_options();
 		echo wp_kses_post( nlsn_before_link_img() );
 		echo wp_kses_post( nlsn_loading_img() );
-		echo wp_kses_post( "<a class='nlsn-link' href='?nlsnaction=clear' rel='nofollow'>" . nlsn_get_option( 'clear' ) . '</a>' );
+		echo wp_kses_post( "<a class='nlsn-link nlsn-clear' href='?nlsnaction=clear' rel='nofollow'>" . nlsn_get_option( 'clear' ) . '</a>' );
 	}
 }
 
