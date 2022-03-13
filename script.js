@@ -23,7 +23,7 @@ function nlsn_do_js( dhis, doAjax, callback ) {
     params = dhis.attr('href').replace('?', '') + '&ajax=1';
     if ( doAjax ) {
         jQuery.get(url, params, function(res) {
-                var json_data = $.parseJSON( res );
+                var json_data = jQuery.parseJSON( res );
                 if( 'add' == action){
                     console.log('adding cookie');
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "added", 30);
@@ -41,8 +41,8 @@ function nlsn_do_js( dhis, doAjax, callback ) {
                     } else {
                         dhis.parent().html(cleanData);
                     }
-                    if($('#selected-report-count').length) {
-                        $('#selected-report-count').text(count);
+                    if(jQuery('#selected-report-count').length) {
+                        jQuery('#selected-report-count').text(count);
                     }
                 }
                 if(typeof nlsn_after_ajax == 'function') {
