@@ -33,7 +33,7 @@ function nlsn_do_js( dhis, doAjax, callback ) {
                 }
                 if('' != json_data.data){
                     let cleanData = DOMPurify.sanitize(json_data.data);
-                    let count = json_data.count;
+                    let count = json_data.selected_report_count;
                     if(dhis.hasClass('remove-parent')) {
                         dhis.parent().parent().fadeOut("slow", function() {
                             jQuery(this).remove();

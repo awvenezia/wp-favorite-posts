@@ -194,15 +194,7 @@ function nlsn_die_or_go( $str ) {
 			${$key} = $val;
 		}
 	}
-	global $nlsn_favorite_post_ids;
-	if ( ! empty( $user ) ) {
-		if ( nlsn_is_user_favlist_public( $user ) ) {
-			$nlsn_favorite_post_ids = nlsn_get_users_favorites( $user );
-		}   
-	} else {
-		$nlsn_favorite_post_ids = nlsn_get_users_favorites();
-	}
-	$res['selected_report_count'] = count($nlsn_favorite_post_ids) > 0 ? count($nlsn_favorite_post_ids) : '';
+	$res['selected_report_count'] = get_selected_report_count($str);
 	if ( $nlsn_ajax_mode ) :
 		echo wp_json_encode($res);
 		die();
@@ -212,6 +204,36 @@ function nlsn_die_or_go( $str ) {
 			exit;
 		}
 	endif;
+}
+
+/**
+ * Get count for selected reports get_selected_report_count
+ *
+ * @param  mixed $str
+ * @return void
+ */
+function get_selected_report_count($str = '') {
+	global $nlsn_favorite_post_ids;
+	if ( ! empty( $user ) ) {
+		if ( nlsn_is_user_favlist_public( $user ) ) {
+			$nlsn_favorite_post_ids = nlsn_get_users_favorites( $user );
+		}   
+	} else {
+		$nlsn_favorite_post_ids = nlsn_get_users_favorites();
+		if( '' !== $str && isset( $_REQUEST['postid'] ) && isset( $_REQUEST['nlsnaction'] ) ) {
+			$nlsn_post_id = sanitize_key( $_REQUEST['postid'] );
+			if ( 'add' === $_REQUEST['nlsnaction'] ) {
+				$nlsn_favorite_post_ids[] = $nlsn_post_id;
+			} elseif ( 'remove' === $_REQUEST['nlsnaction'] ) {
+				if (($key = array_search($nlsn_post_id, $nlsn_favorite_post_ids)) !== false) {
+					unset($nlsn_favorite_post_ids[$key]);
+				}
+			} elseif ( 'clear' === $_REQUEST['nlsnaction'] ) {
+				$nlsn_favorite_post_ids = array();
+			}
+		}
+	}
+	return count($nlsn_favorite_post_ids) > 0 ? count($nlsn_favorite_post_ids) : '';
 }
 
 /**
