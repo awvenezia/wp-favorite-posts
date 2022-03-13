@@ -22,7 +22,8 @@ function nlsn_do_js( dhis, doAjax, callback ) {
     postid = urlParams.searchParams.get('postid');
     params = dhis.attr('href').replace('?', '') + '&ajax=1';
     if ( doAjax ) {
-        jQuery.get(url, params, function(data) {
+        jQuery.get(url, params, function(res) {
+                var json_data = $.parseJSON( res );
                 if( 'add' == action){
                     console.log('adding cookie');
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "added", 30);
@@ -30,14 +31,18 @@ function nlsn_do_js( dhis, doAjax, callback ) {
                     console.log("removing cookie");
                     setCookie(WP_FAV_COOKIE+'['+ postid +']', "", 30);
                 }
-                if('' != data){
+                if('' != json_data.data){
+                    let cleanData = DOMPurify.sanitize(json_data.data);
+                    let count = json_data.count;
                     if(dhis.hasClass('remove-parent')) {
                         dhis.parent().parent().fadeOut("slow", function() {
                             jQuery(this).remove();
                         });
                     } else {
-                        let cleanData = DOMPurify.sanitize(data);
                         dhis.parent().html(cleanData);
+                    }
+                    if($('#selected-report-count').length) {
+                        $('#selected-report-count').text(count);
                     }
                 }
                 if(typeof nlsn_after_ajax == 'function') {

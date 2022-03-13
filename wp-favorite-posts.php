@@ -151,7 +151,7 @@ function nlsn_do_add_to_list( $post_id ) {
  */
 function nlsn_remove_favorite( $post_id = '' ) {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( null !== $nonce &&  ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce && ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		die( esc_html( __( 'Security check', 'nielsen' ) ) ); 
 	} else {
 		if ( empty( $post_id ) && isset( $_REQUEST['postid'] ) ) {
@@ -186,8 +186,26 @@ function nlsn_remove_favorite( $post_id = '' ) {
  */
 function nlsn_die_or_go( $str ) {
 	global $nlsn_ajax_mode;
+	$res = array();
+	$res['data'] = wp_kses_post( $str );
+	$user = isset( $_REQUEST['user'] ) ? sanitize_user( $_REQUEST['user'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( ! empty( $args ) ) {
+		foreach ( $args as $key => $val ) {
+			${$key} = $val;
+		}
+	}
+	global $nlsn_favorite_post_ids;
+	if ( ! empty( $user ) ) {
+		if ( nlsn_is_user_favlist_public( $user ) ) {
+			$nlsn_favorite_post_ids = nlsn_get_users_favorites( $user );
+		}   
+	} else {
+		$nlsn_favorite_post_ids = nlsn_get_users_favorites();
+	}
+	$res['selected_report_count'] = count($nlsn_favorite_post_ids) > 0 ? count($nlsn_favorite_post_ids) : '';
 	if ( $nlsn_ajax_mode ) :
-		die( wp_kses_post( $str ) );
+		echo wp_json_encode($res);
+		die();
 	else :
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
@@ -451,7 +469,7 @@ function nlsn_clear_favorites() {
  */
 function nlsn_do_remove_favorite( $post_id ) {
 	$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_key( $_REQUEST['_wpnonce'] ) : null;
-	if ( null !== $nonce &&  ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
+	if ( null !== $nonce && ! wp_verify_nonce( $nonce, 'nlsn-update_fav' ) ) {
 		die( esc_html( __( 'Security check', 'nielsen' ) ) ); 
 	} else {
 		if ( ! nlsn_check_favorited( $post_id ) ) {
@@ -870,7 +888,7 @@ function nlsn_remove_favorite_link( $post_id ) {
 		$class        = 'nlsn-link remove-parent';
 		$act_link     = '?nlsnaction=remove&amp;page=1&amp;postid=' . esc_attr( $post_id );
 		$act_link     = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( $act_link, 'nlsn-update_fav' ) : $act_link;
-		$link         = "<a id='rem_$post_id' class='$class' href='". $act_link ."' title='" . nlsn_get_option( 'rem' ) . "' rel='nofollow'>" . nlsn_get_option( 'rem' ) . '</a>';
+		$link         = "<a id='rem_$post_id' class='$class' href='" . $act_link . "' title='" . nlsn_get_option( 'rem' ) . "' rel='nofollow'>" . nlsn_get_option( 'rem' ) . '</a>';
 		$link         = apply_filters( 'nlsn_remove_favorite_link', $link );
 		echo wp_kses_post( $link );
 	}
