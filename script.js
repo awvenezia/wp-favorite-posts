@@ -16,13 +16,14 @@ function nlsn_do_js( dhis, doAjax, callback ) {
     loadingImg.show();
     beforeImg = dhis.prev().prev();
     beforeImg.hide();
-    url = document.location.href.split('#')[0];
-    urlParams = new URL(url+dhis.attr('href'));
-    action = urlParams.searchParams.get('nlsnaction');
-    postid = urlParams.searchParams.get('postid');
-    params = dhis.attr('href').replace('?', '') + '&ajax=1';
+    url = window.location.origin;
+    ajaxUrl = new URL(url+dhis.attr('href'));
+    urlParams = (ajaxUrl).searchParams;
+    action = urlParams.get('nlsnaction');
+    postid = urlParams.get('postid');
+    urlParams.set('ajax', 1);
     if ( doAjax ) {
-        jQuery.get(url, params, function(res) {
+        jQuery.get(ajaxUrl.href, function(res) {
                 var json_data = jQuery.parseJSON( res );
                 if( 'add' == action){
                     console.log('adding cookie');
